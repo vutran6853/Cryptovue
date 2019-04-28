@@ -6,6 +6,7 @@ import Mining from './components/mining/Mining.vue';
 import Wallets from './components/wallets/Wallets.vue';
 import News from './components/news/News.vue';
 import Portfolio from './components/portfolio/Portfolio.vue';
+import Overview from './components/coin/Overview.vue';
 
 const router = new VueRouter({
   routes: [
@@ -15,7 +16,8 @@ const router = new VueRouter({
     { path: '/Mining', component: Mining },
     { path: '/Wallets', component: Wallets },
     { path: '/News', component: News },
-    { path: '/Portfolio', component: Portfolio }
+    { path: '/Portfolio', component: Portfolio },
+    { path: '/overview', component: Overview }
   ]
 })
 

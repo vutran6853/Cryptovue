@@ -9,7 +9,8 @@ const state = {
   data: [],
   totalByVol: [],
   exchanges: [],
-  news: []
+  news: [],
+  singleCoinData: []
 }
 
 // to send methods from store to requester
@@ -30,7 +31,11 @@ const getters = {
     return state.exchanges
   },
   
-  allNews: (state) => state.news
+  allNews: (state) => state.news,
+
+  getCoinInfo: function(state) {
+    return state.singleCoinData
+  }
 }
 
 //  def action creators
@@ -62,38 +67,53 @@ const actions = {
   },
 
   handleGetAllNews() {
-    console.log('hit store 61')
+    // console.log('hit store 61')
     axios.get(`${ serverURL }/api/getAllNews`)
     .then((response) => {
       // console.log('response', response.data)
       this.commit('setAllNews',  response.data)
     })
     .catch((error) => console.log('Danger unable to fetch handleGetAllNews' + error));
+  },
+
+  handleGetSingleCoinInfo({}, value) {
+    // console.log('HIT 75', value);
+
+    axios.get(`${ serverURL }/api/getSingleCoin/${ value }`)
+    .then((response) => {
+      console.log(response)
+      this.commit('setSingleCoin', response.data)
+    })
+    .catch((error) => console.log('Danger unable to fetch handleGetSingleCoinInfo' + error));
 
   }
 }
 
 const mutations = {
-  setCurrentBTCPriceData: function(state, value) {
-    // console.log('VALUE: ', value)
-    return state.data = value
+  setCurrentBTCPriceData: function(state, payload) {
+    // console.log('VALUE: ', payload)
+    return state.data = payload
   },
 
-  setAllTotalByVolData: function(state, value) {
-    // console.log('value', value);
-    let result = value.map((value) => {
+  setAllTotalByVolData: function(state, payload) {
+    // console.log('payload', payload);
+    let result = payload.map((value) => {
       // console.log('VALUE:', value)
-      return value.DISPLAY.USD
+      return value
     })
     // console.log('result', result)
     return state.totalByVol = result
   },
 
-  setAllExchanges: function(state, value) {
-    return state.exchanges = value
+  setAllExchanges: function(state, payload) {
+    return state.exchanges = payload
   },
 
-  setAllNews: (state, value) => state.news = value
+  setAllNews: (state, payload) => state.news = payload,
+
+  setSingleCoin: function(state, payload) {
+    return state.singleCoinData = payload
+  }
 }
 
 export default {
