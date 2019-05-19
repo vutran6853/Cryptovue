@@ -34,7 +34,7 @@ export default {
   // will bind store to this
   // mapGetters in computed will bind || connenct to this components
   computed: {
-    ...mapGetters({ exchangesData: 'allExchanges' })
+    ...mapGetters({ exchangesData: 'getAllExchanges' })
   },
 
 }

@@ -9,15 +9,17 @@ import Portfolio from './components/portfolio/Portfolio.vue';
 import Overview from './components/coin/Overview.vue';
 
 const router = new VueRouter({
+  mode: "history",
+  // base: "/",
   routes: [
-    { path: '/', component: Dashboard },
-    { path: '/Coin', component: Coin },
-    { path: '/Exchanges', component: Exchanges },
-    { path: '/Mining', component: Mining },
-    { path: '/Wallets', component: Wallets },
-    { path: '/News', component: News },
-    { path: '/Portfolio', component: Portfolio },
-    { path: '/overview', component: Overview }
+    { path: '/',  component: Dashboard },
+    { path: '/coin', component: Coin },
+    { path: '/exchanges', component: Exchanges },
+    { path: '/mining', component: Mining },
+    { path: '/wallets', component: Wallets },
+    { path: '/news', component: News },
+    { path: '/portfolio', component: Portfolio },
+    { path: '/overview/:coin_id', component: Overview }
   ]
 })
 

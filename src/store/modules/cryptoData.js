@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const serverURL = 'http://localhost:3015';
 
-
 //  initiState
 const state = {
   title: "This is Crypto App in Vue",
@@ -13,61 +12,48 @@ const state = {
   singleCoinData: []
 }
 
-// to send methods from store to requester
+// To send methods from store to requester
 const getters = {
-  getTitle: function(state) {
-    return  state.title
-  },
+  getTitle: state => state.title,
 
-  getCurrentPrice: function(state) {
-    return state.data
-  },
+  getCurrentPrice: state => state.data,
 
-  allTotalByVol: function(state) {
-    return state.totalByVol
-  },
+  getAllTotalByVol: state => state.totalByVol,
 
-  allExchanges: function(state) {
-    return state.exchanges
-  },
-  
-  allNews: (state) => state.news,
+  getAllExchanges: state => state.exchanges,
 
-  getCoinInfo: function(state) {
-    return state.singleCoinData
-  }
+  getAllNews: state => state.news,
+
+  getCoinInfo: state => state.singleCoinData,
 }
 
-//  def action creators
+//  Def action creators
 const actions = {
+  async handleFetchdata() {
+    const response =  await axios.get('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,JPY,EUR')
+            
+    this.commit('setCurrentBTCPriceData', response.data)
+  },
 
- async handleFetchdata() {
-  const response =  await axios.get('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,JPY,EUR')
-          
-  this.commit('setCurrentBTCPriceData', response.data)
- },
-
- handleGetAllTotalByVol() {
-// console.log('hit store');
-   axios.get(`${ serverURL }/api/getAllTotalByVol`)
-   .then((response) => {
+  handleGetAllTotalByVol() {
+    axios.get(`${ serverURL }/api/getAllTotalByVol`)
+    .then((response) => {
     //  console.log(response);
       this.commit('setAllTotalByVolData',  response.data)
-   })
-   .catch((error) => console.log('Danger unable to fetch handleGetAllTotalByVol' + error));
- },
+    })
+    .catch((error) => console.log('Danger unable to fetch handleGetAllTotalByVol' + error));
+  },
 
- handleGetAllExchanges() {
-  axios.get(`${ serverURL }/api/getAllExchanges`)
-  .then((response) => {
-    // console.log(response);
-     this.commit('setAllExchanges',  response.data)
-  })
-  .catch((error) => console.log('Danger unable to fetch handleGetAllExchanges' + error));
+  handleGetAllExchanges() {
+    axios.get(`${ serverURL }/api/getAllExchanges`)
+    .then((response) => {
+      // console.log(response);
+        this.commit('setAllExchanges',  response.data)
+    })
+    .catch((error) => console.log('Danger unable to fetch handleGetAllExchanges' + error));
   },
 
   handleGetAllNews() {
-    // console.log('hit store 61')
     axios.get(`${ serverURL }/api/getAllNews`)
     .then((response) => {
       // console.log('response', response.data)
@@ -77,12 +63,10 @@ const actions = {
   },
 
   handleGetSingleCoinInfo({}, value) {
-    // console.log('HIT 75', value);
-
     axios.get(`${ serverURL }/api/getSingleCoin/${ value }`)
     .then((response) => {
-      console.log(response)
-      this.commit('setSingleCoin', response.data)
+      // console.log(response.data)
+      this.commit('setSingleCoin', response.data.DISPLAY)
     })
     .catch((error) => console.log('Danger unable to fetch handleGetSingleCoinInfo' + error));
 
@@ -90,10 +74,7 @@ const actions = {
 }
 
 const mutations = {
-  setCurrentBTCPriceData: function(state, payload) {
-    // console.log('VALUE: ', payload)
-    return state.data = payload
-  },
+  setCurrentBTCPriceData: (state, payload) => state.data = payload,
 
   setAllTotalByVolData: function(state, payload) {
     // console.log('payload', payload);
@@ -101,19 +82,14 @@ const mutations = {
       // console.log('VALUE:', value)
       return value
     })
-    // console.log('result', result)
     return state.totalByVol = result
   },
 
-  setAllExchanges: function(state, payload) {
-    return state.exchanges = payload
-  },
+  setAllExchanges: (state, payload) => state.exchanges = payload,
 
   setAllNews: (state, payload) => state.news = payload,
 
-  setSingleCoin: function(state, payload) {
-    return state.singleCoinData = payload
-  }
+  setSingleCoin: (state, payload) => state.singleCoinData = payload,
 }
 
 export default {

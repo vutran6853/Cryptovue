@@ -4,26 +4,41 @@
     <p class="testBox">TestBox</p>
     <div v-if='coins[0]'>
       <p>True</p>
-      <router-link to="/overview">
-        <div @click='handleSingleCoininfo(displayCoin.CoinInfo.Internal)' class="coinContainer coinHover" v-for='displayCoin in coins' v-bind:key='displayCoin.CoinInfo.Internal'>
-          <p>CHANGE24HOUR: {{ displayCoin.DISPLAY.USD.CHANGE24HOUR }}</p>
-          <p>CHANGEDAY: {{ displayCoin.DISPLAY.USD.CHANGEDAY }}</p>
-          <p>CHANGEPCT24HOUR: {{ displayCoin.DISPLAY.USD.CHANGEPCT24HOUR }}</p>
-          <p>FROMSYMBOL: {{ displayCoin.DISPLAY.USD.FROMSYMBOL }}</p>
-          <p>HIGH24HOUR: {{ displayCoin.DISPLAY.USD.HIGH24HOUR }}</p>
+      <div class="hearder">
+        <p>#</p>
+        <p>Coin</p>
+        <p>Price</p> 
+        <p>Total Vol.24</p>
+        <p>Chg.24h</p>
+      </div>
+      <router-link v-bind:to="`overview/${ displayCoin.CoinInfo.Internal }`" v-for='(displayCoin, index) in coins' v-bind:key='displayCoin.CoinInfo.Internal'> 
+      <div class="coinContainer coinHover" @click='handleFetchSingleCoininfo(displayCoin.CoinInfo.Internal)'>
+        <p>{{ index + 1 }}</p>
+        <!-- <p ></p> -->
+        <img v-bind:src="'https://www.cryptocompare.com' + displayCoin.DISPLAY.USD.IMAGEURL" alt="broke"/>
+        <p>{{ displayCoin.DISPLAY.USD.CHANGE24HOUR }}</p>
+        <p>{{ displayCoin.DISPLAY.USD.HIGH24HOUR }}</p>
+        <p>{{ displayCoin.DISPLAY.USD.CHANGEPCT24HOUR }}</p>
+      </div>
+
+        <!-- <div @click='handleFetchSingleCoininfo(displayCoin.CoinInfo.Internal)' class="coinContainer coinHover"> -->
+          <!-- <p>CHANGE24HOUR: {{ displayCoin.DISPLAY.USD.CHANGE24HOUR }}</p> -->
+          <!-- <p>CHANGEDAY: {{ displayCoin.DISPLAY.USD.CHANGEDAY }}</p> -->
+          <!-- <p>CHANGEPCT24HOUR: {{ displayCoin.DISPLAY.USD.CHANGEPCT24HOUR }}</p> -->
+          <!-- <p>FROMSYMBOL: {{ displayCoin.DISPLAY.USD.FROMSYMBOL }}</p> -->
+          <!-- <p>HIGH24HOUR: {{ displayCoin.DISPLAY.USD.HIGH24HOUR }}</p> -->
           <!-- <img :src="https://www.cryptocompare.com + displayCoin.DISPLAY.USD.IMAGEURL" alt=""/> -->
-          <img v-bind:src="'https://www.cryptocompare.com' + displayCoin.DISPLAY.USD.IMAGEURL" alt="broke"/>
-          <p>HIGHDAY: {{ displayCoin.DISPLAY.USD.HIGHDAY }}</p>
-          <p>HIGHHOUR: {{ displayCoin.DISPLAY.USD.HIGHHOUR }}</p>
-          <p>LASTMARKET: {{ displayCoin.DISPLAY.USD.LASTMARKET }}</p>
-          <p>LASTVOLUME: {{ displayCoin.DISPLAY.USD.LASTVOLUME }}</p>
-          <p>LOW24HOUR: {{ displayCoin.DISPLAY.USD.LOW24HOUR }}</p>
-          <p>LOWDAY: {{ displayCoin.DISPLAY.USD.LOWDAY }}</p>
-          <p>LOWHOUR: {{ displayCoin.DISPLAY.USD.LOWHOUR }}</p>
-          <p>MARKET: {{ displayCoin.DISPLAY.USD.MARKET }}</p>
-          <p>MKTCAP: {{ displayCoin.DISPLAY.USD.MKTCAP }}</p>
-          <p>OPEN24HOUR: {{ displayCoin.DISPLAY.USD.OPEN24HOUR }}</p>
-        </div>
+          <!-- <p>HIGHDAY: {{ displayCoin.DISPLAY.USD.HIGHDAY }}</p> -->
+          <!-- <p>HIGHHOUR: {{ displayCoin.DISPLAY.USD.HIGHHOUR }}</p> -->
+          <!-- <p>LASTMARKET: {{ displayCoin.DISPLAY.USD.LASTMARKET }}</p> -->
+          <!-- <p>LASTVOLUME: {{ displayCoin.DISPLAY.USD.LASTVOLUME }}</p> -->
+          <!-- <p>LOW24HOUR: {{ displayCoin.DISPLAY.USD.LOW24HOUR }}</p> -->
+          <!-- <p>LOWDAY: {{ displayCoin.DISPLAY.USD.LOWDAY }}</p> -->
+          <!-- <p>LOWHOUR: {{ displayCoin.DISPLAY.USD.LOWHOUR }}</p> -->
+          <!-- <p>MARKET: {{ displayCoin.DISPLAY.USD.MARKET }}</p> -->
+          <!-- <p>MKTCAP: {{ displayCoin.DISPLAY.USD.MKTCAP }}</p> -->
+          <!-- <p>OPEN24HOUR: {{ displayCoin.DISPLAY.USD.OPEN24HOUR }}</p> -->
+        <!-- </div> -->
       </router-link>
     </div>
     <div v-else=''>
@@ -41,9 +56,10 @@ export default {
   // mapAction will import from store
   methods: {
     ...mapActions(['handleGetAllTotalByVol']),
-    handleSingleCoininfo: function(coinSymbol) {
-      // console.log('hit 45');
+
+    handleFetchSingleCoininfo: function(coinSymbol) {
       console.log('coinSymbol: ', coinSymbol);
+      // console.log('this', this)
       this.$store.dispatch('handleGetSingleCoinInfo', coinSymbol)
     }
   },
@@ -56,7 +72,7 @@ export default {
   // will bind store to this
   // mapGetters in computed will bind || connenct to this components
   computed: {
-    ...mapGetters({ coins: 'allTotalByVol' })
+    ...mapGetters({ coins: 'getAllTotalByVol' })
   },
   // mounted: {
   //      ...mapState(['allCoinData'])
@@ -67,30 +83,50 @@ export default {
 
 <style lang="scss">
 $color: #333;
-$testBox-border: 1px solid lightblue;
+$testBox-border: 1px solid blue;
 
 .testBox {
   border: $testBox-border;
 }
 
+.hearder {
+  // border: 1px solid blue;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+  
+  p {
+    border: 1px solid red;
+    text-align: left;
+  }
+}
+
 .coinContainer {
   border: $testBox-border;
-  display: inline-grid;
-  grid-auto-rows: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+  // grid-row: 2fr;
+  // grid-gap: 100px;
+  // grid-auto-flow: auto;
+  // grid-gap: 100rem !important;
+  // grid-template-rows: 1fr;
+  // display: inline-table;
+  // grid-auto-rows: auto;
   // margin-bottom: 1rem;
   // height: 50%;
   // width: 20rem;
 
   img {
-      border: 1px solid lightcoral;
-      height: 10rem;
-      width: 10rem;
+      border: 3px solid lightcoral;
+      height: 3rem;
+      width: 3rem;
   }
 }
 
 .coinHover:hover {
-    background-color: red;
-  }
+  background-color: red;
+}
 
 a {
   // background-color: lightblue;

@@ -1,10 +1,7 @@
 <template>
   <div>
     <div v-for='(tabName, index) in navbarTab' v-bind:key='index' class="narbarItem">
-      <!-- <transition> -->
-        
-        <router-link :to='tabName'>{{ tabName }}</router-link>
-      <!-- </transition>s -->
+      <router-link :to="`/${tabName}`">{{ tabName }}</router-link>
     </div>
   </div>
 </template>
@@ -14,7 +11,7 @@ export default {
   name: "Navbar",
   data: function() {
     return {
-      navbarTab: ["Home", "Coin", "exchanges", "mining", "Wallets", "News", "Portfolio"]
+      navbarTab: ["home", "coin", "exchanges", "mining", "wallets", "news", "portfolio"]
     }
   }
 }

@@ -14,9 +14,9 @@ export default {
   name: "News",
 
   created: function() {
-    this.$store.dispatch('handleGetAllNews')
+    this.$store.dispatch('getAllNews')
   },
-  computed: mapGetters({ newsData: 'allNews' })
+  computed: mapGetters({ newsData: 'getAllNews' })
 
 }
 </script>
