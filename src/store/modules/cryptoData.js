@@ -37,39 +37,24 @@ const actions = {
 
   handleGetAllTotalByVol() {
     axios.get(`${ serverURL }/api/getAllTotalByVol`)
-    .then((response) => {
-    //  console.log(response);
-      this.commit('setAllTotalByVolData',  response.data)
-    })
+    .then((response) => this.commit('setAllTotalByVolData',  response.data))
     .catch((error) => console.log('Danger unable to fetch handleGetAllTotalByVol' + error));
   },
 
   handleGetAllExchanges() {
     axios.get(`${ serverURL }/api/getAllExchanges`)
-    .then((response) => {
-      // console.log(response);
-        this.commit('setAllExchanges',  response.data)
-    })
+    .then((response) => this.commit('setAllExchanges',  response.data))
     .catch((error) => console.log('Danger unable to fetch handleGetAllExchanges' + error));
   },
 
   handleGetAllNews() {
     axios.get(`${ serverURL }/api/getAllNews`)
-    .then((response) => {
-      // console.log('response', response.data)
-      this.commit('setAllNews',  response.data)
-    })
+    .then((response) => this.commit('setAllNews',  response.data))
     .catch((error) => console.log('Danger unable to fetch handleGetAllNews' + error));
   },
 
-  handleGetSingleCoinInfo({}, value) {
-    axios.get(`${ serverURL }/api/getSingleCoin/${ value }`)
-    .then((response) => {
-      // console.log(response.data)
-      this.commit('setSingleCoin', response.data.DISPLAY)
-    })
-    .catch((error) => console.log('Danger unable to fetch handleGetSingleCoinInfo' + error));
-
+  handleGetSingleCoinInfo({}, payload) {
+    this.commit('setSingleCoin', payload)
   }
 }
 

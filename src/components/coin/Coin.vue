@@ -4,7 +4,7 @@
     <p class="testBox">TestBox</p>
     <div v-if='coins[0]'>
       <p>True</p>
-      <div class="hearder">
+      <div class="headerGrid">
         <p>#</p>
         <p>Coin</p>
         <p>Price</p> 
@@ -12,12 +12,12 @@
         <p>Chg.24h</p>
       </div>
       <router-link v-bind:to="`overview/${ displayCoin.CoinInfo.Internal }`" v-for='(displayCoin, index) in coins' v-bind:key='displayCoin.CoinInfo.Internal'> 
-      <div class="coinContainer coinHover" @click='handleFetchSingleCoininfo(displayCoin.CoinInfo.Internal)'>
+      <div class="coinGrid coinHover" @click='handleFetchSingleCoininfo(coins[index])'>
         <p>{{ index + 1 }}</p>
         <!-- <p ></p> -->
         <img v-bind:src="'https://www.cryptocompare.com' + displayCoin.DISPLAY.USD.IMAGEURL" alt="broke"/>
-        <p>{{ displayCoin.DISPLAY.USD.CHANGE24HOUR }}</p>
         <p>{{ displayCoin.DISPLAY.USD.HIGH24HOUR }}</p>
+        <p>{{ displayCoin.DISPLAY.USD.CHANGE24HOUR }}</p>
         <p>{{ displayCoin.DISPLAY.USD.CHANGEPCT24HOUR }}</p>
       </div>
 
@@ -57,10 +57,8 @@ export default {
   methods: {
     ...mapActions(['handleGetAllTotalByVol']),
 
-    handleFetchSingleCoininfo: function(coinSymbol) {
-      console.log('coinSymbol: ', coinSymbol);
-      // console.log('this', this)
-      this.$store.dispatch('handleGetSingleCoinInfo', coinSymbol)
+    handleFetchSingleCoininfo: function(coinInfo) {
+      this.$store.dispatch('handleGetSingleCoinInfo', coinInfo)
     }
   },
   
@@ -89,10 +87,10 @@ $testBox-border: 1px solid blue;
   border: $testBox-border;
 }
 
-.hearder {
+.headerGrid {
   // border: 1px solid blue;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 50px 1fr 1fr 1fr 1fr;
 
   
   p {
@@ -101,10 +99,15 @@ $testBox-border: 1px solid blue;
   }
 }
 
-.coinContainer {
+.coinGrid {
   border: $testBox-border;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 50px 1fr 1fr 1fr 1fr;
+
+  p {
+    // border: 1px solid red;s
+    margin: 0px;
+  }
 
   // grid-row: 2fr;
   // grid-gap: 100px;
@@ -118,9 +121,9 @@ $testBox-border: 1px solid blue;
   // width: 20rem;
 
   img {
-      border: 3px solid lightcoral;
-      height: 3rem;
-      width: 3rem;
+      border: 1px solid lightcoral;
+      height: 2rem;
+      width: 2rem;
   }
 }
 
