@@ -9,7 +9,8 @@ const state = {
   totalByVol: [],
   exchanges: [],
   news: [],
-  singleCoinData: []
+  singleCoinData: [],
+  historyData: []
 }
 
 // To send methods from store to requester
@@ -25,6 +26,9 @@ const getters = {
   getAllNews: state => state.news,
 
   getCoinInfo: state => state.singleCoinData,
+
+  getHistoryData: state => state.historyData,
+
 }
 
 //  Def action creators
@@ -38,23 +42,33 @@ const actions = {
   handleGetAllTotalByVol() {
     axios.get(`${ serverURL }/api/getAllTotalByVol`)
     .then((response) => this.commit('setAllTotalByVolData',  response.data))
-    .catch((error) => console.log('Danger unable to fetch handleGetAllTotalByVol' + error));
+    .catch((err) => console.log('Danger unable to fetch handleGetAllTotalByVol' + err));
   },
 
   handleGetAllExchanges() {
     axios.get(`${ serverURL }/api/getAllExchanges`)
     .then((response) => this.commit('setAllExchanges',  response.data))
-    .catch((error) => console.log('Danger unable to fetch handleGetAllExchanges' + error));
+    .catch((err) => console.log('Danger unable to fetch handleGetAllExchanges' + err));
   },
 
   handleGetAllNews() {
     axios.get(`${ serverURL }/api/getAllNews`)
     .then((response) => this.commit('setAllNews',  response.data))
-    .catch((error) => console.log('Danger unable to fetch handleGetAllNews' + error));
+    .catch((err) => console.log('Danger unable to fetch handleGetAllNews' + err));
   },
 
   handleGetSingleCoinInfo({}, payload) {
     this.commit('setSingleCoin', payload)
+  },
+
+  handleGetHistoryByDate({}, payload) {
+    // console.log('payload=', payload)
+    axios.post(`${ serverURL }/api/getHistoryByDate`, payload)
+    .then((response) => {
+      // console.log(response)
+      this.commit('setHistoryData', response.data)
+    })
+    .catch((err) => console.log('Danger unable to fetch handleGetHistoryByDate()' + err));
   }
 }
 
@@ -75,6 +89,9 @@ const mutations = {
   setAllNews: (state, payload) => state.news = payload,
 
   setSingleCoin: (state, payload) => state.singleCoinData = payload,
+
+  setHistoryData: (state, payload) => state.historyData = payload,
+  
 }
 
 export default {

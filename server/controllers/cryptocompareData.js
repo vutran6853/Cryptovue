@@ -19,18 +19,38 @@ const getAllNews = (req, res) => {
 }
 
 const getSingleCoin = (req, res) => {
-  console.log(req.params)
+  // console.log(req.params)
   axios.get(`  https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${ req.params.coin }&tsyms=USD,EUR`)
   .then((response) => {
     // console.log(response.data)
     res.status(200).send(response.data)
   })
-  .catch((error) => console.log('Danger unable to fetch getSingleCoin' + error));
+  .catch((error) => console.log('Danger unable to fetch getSingleCoin()' + error));
+}
+
+const getHistoryByDate = async(req, res, next) => {
+  // console.log(' HIT getHistoryByDate()')
+
+  try {
+    let result = await axios.get(`https://min-api.cryptocompare.com/data/${ req.body.date }?fsym=${ req.body.coin_id }&tsym=USD&limit=10`)
+    
+    if(result) {
+      // console.log('RESULT=', result.data.Data)
+      res.status(200).send(result.data.Data)
+    }
+  }
+  catch(err) {
+    if(err) {
+      console.log('Danger! unable to fetch getHistoryByDate()', err);
+      res.status(404).send('Danger! unable to fetch getHistoryByDate()')
+    }
+  }
 }
 
 module.exports = {
   getAllTotalByVol,
   getAllExchanges,
   getAllNews,
-  getSingleCoin
+  getSingleCoin,
+  getHistoryByDate
 }

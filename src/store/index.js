@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import cryptoData from './modules/cryptoData';
+import cryptoStore from './modules/cryptoStore';
 
 //  Load Vuex
 Vue.use(Vuex);
@@ -8,6 +8,6 @@ Vue.use(Vuex);
 //  Create store
 export default new Vuex.Store({
   modules: {
-    cryptoData
+    cryptoStore
   }
 })

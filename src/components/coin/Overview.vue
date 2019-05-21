@@ -27,6 +27,22 @@
           <p>{{  coinDATA.DISPLAY.USD.OPEN24HOUR }}</p>
           <p>{{  coinDATA.DISPLAY.USD.LOW24HOUR }} - {{  coinDATA.DISPLAY.USD.HIGH24HOUR }}</p>
         </div>
+
+        <div class="" v-if='historyDATA.length === 0'>
+          <p>True</p>
+        </div>
+        <div v-else=''>
+          <p>This is for chart data</p>
+          <div v-for='(value, index) in historyDATA' v-bind:key=index class="">
+            {{ value.close }}
+          </div>
+        </div>
+
+        <div v-for='(value, index) in timeDate' v-bind:key=index class="btn_time">
+          <button @click='handleFetchCoinInTime(value)'>1 {{ index }}</button>
+        </div>
+      </div>
+    </div>
         <!-- <p>HIGHHOUR: {{  coinDATA.DISPLAY.USD.HIGHHOUR }}</p> -->
         <!-- <p>CHANGE24HOUR: {{  coinDATA.DISPLAY.USD.CHANGE24HOUR }}</p> -->
         <!-- <p>CHANGEDAY: {{  coinDATA.DISPLAY.USD.CHANGEDAY }}</p> -->
@@ -40,12 +56,6 @@
         <!-- <p>LOWHOUR: {{  coinDATA.DISPLAY.USD.LOWHOUR }}</p> -->
         <!-- <p>MARKET: {{  coinDATA.DISPLAY.USD.MARKET }}</p> -->
         <!-- <p>CHANGEDAY: {{  coinDATA.DISPLAY.USD.CHANGEDAY }}</p> -->
-        <div v-for='(value, index) in timeDate' v-bind:key=index class="btn_time">
-          <button @click='handleFetchCoinInTime(value)'>1 {{ value }}</button>
-        </div>
-      </div>
-    </div>
-
       <!-- <div @click='handleFetchSingleCoininfo(coinDATA.CoinInfo.Internal)' class="coinContainer coinHover" v-for='coinDATA in coins' v-bind:key='coinDATA.CoinInfo.Internal'> -->
   </div>
 </template>
@@ -57,7 +67,13 @@ export default {
   name: "Overview",
   data() {
     return {
-      timeDate: ['hour', 'day', 'week', 'month', 'year']
+      timeDate:  {
+        minute: 'histominute', 
+        hour: 'histohour', 
+        day: 'histoday'
+      }
+
+      
     }
   },
   mounted() {
@@ -69,16 +85,19 @@ export default {
   },
   methods: {
     handleFetchCoinInTime(value) {
-      console.log('value=', value);
-      console.log(this.coinDATA.CoinInfo.Name)
+      // console.log('value=', value)
+      // console.log(this.coinDATA.CoinInfo.Name)
+      let data = { date: value, coin_id: this.coinDATA.CoinInfo.Name }
 
-      // this.$store.dispatch('')
-
+      this.$store.dispatch('handleGetHistoryByDate', data)
     }
   },
   computed: {
     // coinDATA: this.$store.state.cryptoData.singleCoinData
-    ...mapGetters({ coinDATA: 'getCoinInfo' })
+    ...mapGetters({ 
+      coinDATA: 'getCoinInfo',
+      historyDATA: 'getHistoryData'  
+    })
   }
 }
 </script>
