@@ -10,7 +10,8 @@ const state = {
   exchanges: [],
   news: [],
   singleCoinData: [],
-  historyData: []
+  historyData: [],
+  miningData: []
 }
 
 // To send methods from store to requester
@@ -29,6 +30,7 @@ const getters = {
 
   getHistoryData: state => state.historyData,
 
+  getMiningData: state => state.miningData
 }
 
 //  Def action creators
@@ -69,14 +71,22 @@ const actions = {
       this.commit('setHistoryData', response.data)
     })
     .catch((err) => console.log('Danger unable to fetch handleGetHistoryByDate()' + err));
-  }
+  },
+
+  handleGetAllMining() {
+    axios.get(`${ serverURL }/api/getAllMining`)
+    .then((response) => {
+      // console.log(response.data);
+      this.commit('setAllMining',  response.data.Data)
+    })
+    .catch((err) => console.log('Danger unable to fetch handleGetAllMining()' + err));
+  },
 }
 
 const mutations = {
   setCurrentBTCPriceData: (state, payload) => state.data = payload,
 
   setAllTotalByVolData: function(state, payload) {
-    // console.log('payload', payload);
     let result = payload.map((value) => {
       // console.log('VALUE:', value)
       return value
@@ -91,7 +101,9 @@ const mutations = {
   setSingleCoin: (state, payload) => state.singleCoinData = payload,
 
   setHistoryData: (state, payload) => state.historyData = payload,
-  
+
+  setAllMining: (state, payload) => state.miningData = payload,
+
 }
 
 export default {

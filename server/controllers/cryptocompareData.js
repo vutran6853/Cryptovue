@@ -32,11 +32,11 @@ const getHistoryByDate = async(req, res, next) => {
   // console.log(' HIT getHistoryByDate()')
 
   try {
-    let result = await axios.get(`https://min-api.cryptocompare.com/data/${ req.body.date }?fsym=${ req.body.coin_id }&tsym=USD&limit=10`)
+    let response = await axios.get(`https://min-api.cryptocompare.com/data/${ req.body.date }?fsym=${ req.body.coin_id }&tsym=USD&limit=10`)
     
-    if(result) {
-      // console.log('RESULT=', result.data.Data)
-      res.status(200).send(result.data.Data)
+    if(response) {
+      // console.log('response=', response.data.Data)
+      res.status(200).send(response.data.Data)
     }
   }
   catch(err) {
@@ -47,10 +47,23 @@ const getHistoryByDate = async(req, res, next) => {
   }
 }
 
+const getAllMining = async(req, res, next) => {
+
+  try {
+    let response = await axios.get(`https://min-api.cryptocompare.com/data/mining/contracts/general?api_key=${ process.env.VUE_APP_CRYPTO_KEY }`)
+    // console.log(response);
+    res.status(200).send(response.data)
+  }
+  catch(err) {
+    res.status(404).send('Danger! unable to fetch getAllMining()', err)
+  }
+}
+
 module.exports = {
   getAllTotalByVol,
   getAllExchanges,
   getAllNews,
   getSingleCoin,
-  getHistoryByDate
+  getHistoryByDate,
+  getAllMining
 }

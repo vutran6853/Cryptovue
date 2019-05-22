@@ -4,7 +4,12 @@ const cors = require('cors');
 const port = 3015;
 const app = express();
 
-const { getAllTotalByVol, getAllExchanges, getAllNews, getSingleCoin, getHistoryByDate } = require('./controllers/cryptocompareData');
+const { getAllTotalByVol, 
+        getAllExchanges, 
+        getAllNews, 
+        getSingleCoin, 
+        getHistoryByDate,
+        getAllMining } = require('./controllers/cryptocompareData');
 
 app.use(express.json());
 app.use(cors());
@@ -14,6 +19,7 @@ app.get('/api/getAllTotalByVol', getAllTotalByVol);
 app.get('/api/getAllExchanges', getAllExchanges);
 app.get('/api/getAllNews', getAllNews);
 app.get('/api/getSingleCoin/:coin', getSingleCoin);
+app.get('/api/getAllMining', getAllMining)
 
 app.post('/api/getHistoryByDate', getHistoryByDate)
 
