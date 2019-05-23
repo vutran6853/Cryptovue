@@ -71,11 +71,7 @@ export default {
   // mapGetters in computed will bind || connenct to this components
   computed: {
     ...mapGetters({ coins: 'getAllTotalByVol' })
-  },
-  // mounted: {
-  //      ...mapState(['allCoinData'])
- 
-  // }
+  }
 }
 </script>
 
@@ -91,7 +87,6 @@ $testBox-border: 1px solid blue;
   // border: 1px solid blue;
   display: grid;
   grid-template-columns: 50px 1fr 1fr 1fr 1fr;
-
   
   p {
     border: 1px solid red;

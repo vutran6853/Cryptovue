@@ -64,7 +64,6 @@ const actions = {
   },
 
   handleGetHistoryByDate({}, payload) {
-    // console.log('payload=', payload)
     axios.post(`${ serverURL }/api/getHistoryByDate`, payload)
     .then((response) => {
       // console.log(response)
@@ -102,7 +101,30 @@ const mutations = {
 
   setHistoryData: (state, payload) => state.historyData = payload,
 
-  setAllMining: (state, payload) => state.miningData = payload,
+  setAllMining: function(state, payload) {
+    // console.log('payload',)
+    // let me =  []
+
+
+    // for(let key in payload) {
+      // console.log(payload[key])
+      // if(payload[key].)
+      // me.push(payload[key])
+    // }
+    // console.log(me);
+          // console.log(new Set(payload[key].Company))
+    // let me2 = new Set(me.map((value) => {
+    //   if(!new Set(value.Company)) {
+    //     return value
+    //   }
+    // }))
+    // console.log(me2)
+    // let result = payload.filter((value, index) => {
+    //   console.log(`value=${ value }, index=${ index }`)
+    //   // console.dir(value)
+    // })
+    state.miningData = payload
+  },
 
 }
 

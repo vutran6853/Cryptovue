@@ -1,25 +1,26 @@
 <template>
-  <div class="">
-    <p>Mining Components</p>
+  <div class="miningGrid">
+    <!-- <p>Mining Components</p> -->
     
-    <div class="miningGrid" v-for='(value, name, index) in miningDATA' v-bind:key=index>
+    <div class="miningGridItem" v-for='(value, name, index) in miningDATA' v-bind:key=index>
       
       <p>Company: {{ value.Company }}</p>
+      <p>Name: {{ value.Name }}</p>
       <p>Cost: {{ value.Cost }}</p>
       <p>CurrenciesAvailable: {{ value.CurrenciesAvailable }}</p>
-      <p>Rating: {{ value.Rating }}</p>
       <p>Recommended: {{ value.Recommended }}</p>
       <p>Sponsored: {{ value.Sponsored }}</p>
       <p>HashesPerSecond: {{ value.HashesPerSecond }}</p>
+      <img v-bind:src="'https://www.cryptocompare.com' + value.LogoUrl" alt="LogoUrl"/>
+      <StarRating v-bind:rating='value.Rating.Avg' :read-only='true' :increment='0.01'></StarRating>
 
-<!-- {{ name }} -->
-<!-- {{ index }} -->
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import StarRating from 'vue-star-rating'
 
 export default {
   name: "Mining",
@@ -27,6 +28,9 @@ export default {
     return {
       top10MiningData: []
     }
+  },
+  components: {
+    StarRating
   },
   created() {
     // console.log('hit created')
@@ -45,9 +49,21 @@ export default {
 }
 </script>
 
-<style lang=scss srcoped>
+<style lang=scss scoped>
 .miningGrid {
   border: 2px solid red;
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: 14px;
+
+  .miningGridItem {
+    border: 2px solid yellow;
+
+    img {
+      height: 5rem;
+      width: 5rem;
+    }
+
+  }
 }
 </style>

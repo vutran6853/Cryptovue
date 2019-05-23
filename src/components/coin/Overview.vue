@@ -93,7 +93,6 @@ export default {
     }
   },
   computed: {
-    // coinDATA: this.$store.state.cryptoData.singleCoinData
     ...mapGetters({ 
       coinDATA: 'getCoinInfo',
       historyDATA: 'getHistoryData'  
