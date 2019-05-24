@@ -10,8 +10,14 @@
       <p>CurrenciesAvailable: {{ value.CurrenciesAvailable }}</p>
       <p>Recommended: {{ value.Recommended }}</p>
       <p>Sponsored: {{ value.Sponsored }}</p>
-      <p>HashesPerSecond: {{ value.HashesPerSecond }}</p>
-      <img v-bind:src="'https://www.cryptocompare.com' + value.LogoUrl" alt="LogoUrl"/>
+      <!-- <p>link: {{ value.AffiliateURL }}</p> -->
+      <!-- <a rel="stylesheet" v-bind:href='value.AffiliateURL'> -->
+        <!-- <a href="value.AffiliateURL"></a> -->
+        <a v-bind:href="value.AffiliateURL">
+          <img v-bind:src="'https://www.cryptocompare.com' + value.LogoUrl" alt="LogoUrl"/>
+        </a>
+
+      <!-- <p>HashesPerSecond: {{ value.HashesPerSecond }}</p> -->
       <StarRating v-bind:rating='value.Rating.Avg' :read-only='true' :increment='0.01'></StarRating>
 
     </div>
@@ -20,7 +26,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import StarRating from 'vue-star-rating'
+import StarRating from 'vue-star-rating';
+
 
 export default {
   name: "Mining",

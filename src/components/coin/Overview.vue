@@ -30,11 +30,18 @@
 
         <div class="" v-if='historyDATA.length === 0'>
           <p>True</p>
+          <!-- <div>
+            <Bar class="chartContainer"/>
+          </div> -->
+       
         </div>
         <div v-else=''>
           <p>This is for chart data</p>
           <div v-for='(value, index) in historyDATA' v-bind:key=index class="">
             {{ value.close }}
+          </div>
+          <div>
+            <Bars v-bind:props='historyDATA' class="chartContainer"/>
           </div>
         </div>
 
@@ -62,9 +69,13 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import Bars from '../chart/Chart.js';
 
 export default {
   name: "Overview",
+  components: {
+    Bars
+  },
   data() {
     return {
       timeDate:  {
@@ -200,7 +211,11 @@ $test_border: 2px solid red;
   }
 }
 
-
+.chartContainer {
+  border: 2px solid red;
+  height: 20rem;
+  width: 20rem;
+}
 
 
 </style>
