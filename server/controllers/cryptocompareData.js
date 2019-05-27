@@ -29,7 +29,7 @@ const getSingleCoin = (req, res) => {
 }
 
 const getHistoryByDate = async(req, res, next) => {
-
+  // console.log(req.body)
   try {
     let response = await axios.get(`https://min-api.cryptocompare.com/data/${ req.body.date }?fsym=${ req.body.coin_id }&tsym=USD&limit=10`)
     

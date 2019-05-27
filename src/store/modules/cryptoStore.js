@@ -66,7 +66,7 @@ const actions = {
   handleGetHistoryByDate({}, payload) {
     axios.post(`${ serverURL }/api/getHistoryByDate`, payload)
     .then((response) => {
-      // console.log(response)
+      console.log(response)
       this.commit('setHistoryData', response.data)
     })
     .catch((err) => console.log('Danger unable to fetch handleGetHistoryByDate()' + err));

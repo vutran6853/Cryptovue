@@ -28,25 +28,16 @@
           <p>{{  coinDATA.DISPLAY.USD.LOW24HOUR }} - {{  coinDATA.DISPLAY.USD.HIGH24HOUR }}</p>
         </div>
 
-        <div class="" v-if='historyDATA.length === 0'>
+        <div class="">
           <p>True</p>
-          <!-- <div>
-            <Bar class="chartContainer"/>
-          </div> -->
+          <div>
+            <Bars class="chartContainer" :chart-data='datacollection'></Bars>
+          </div>
        
         </div>
-        <div v-else=''>
-          <p>This is for chart data</p>
-          <div v-for='(value, index) in historyDATA' v-bind:key=index class="">
-            {{ value.close }}
-          </div>
-          <div>
-            <Bars v-bind:props='historyDATA' class="chartContainer"/>
-          </div>
-        </div>
 
-        <div v-for='(value, index) in timeDate' v-bind:key=index class="btn_time">
-          <button @click='handleFetchCoinInTime(value)'>1 {{ index }}</button>
+        <div class="btn_time" v-for='(value, index) in timeDate' v-bind:key=index >
+          <button @click='handleFetchCoinInTime(value), fillData()'>1 {{ index }}</button>
         </div>
       </div>
     </div>
@@ -82,33 +73,45 @@ export default {
         minute: 'histominute', 
         hour: 'histohour', 
         day: 'histoday'
-      }
-
-      
+      },
+      tempData: [],
+      datacollection: null
     }
   },
-  mounted() {
-    // console.log('THIS>', )
-    // console.log('coinData=', this.coinDATA[this.$route.params.coin_id]);
-    // console.log(coinDATA);
-    // console.log('this', this.$store.getters.getCoinInfo)
 
+  mounted() {
+    let data = { date: 'histoday', coin_id: this.coinDATA.CoinInfo.Name }
+    this.$store.dispatch('handleGetHistoryByDate', data)
+    this.fillData()
   },
+
   methods: {
     handleFetchCoinInTime(value) {
-      // console.log('value=', value)
-      // console.log(this.coinDATA.CoinInfo.Name)
       let data = { date: value, coin_id: this.coinDATA.CoinInfo.Name }
-
       this.$store.dispatch('handleGetHistoryByDate', data)
+    },
+
+    fillData () {
+      console.log('this', this.$store.getters.getHistoryData)
+      this.datacollection = {
+        labels: this.historyDATA.map((value) => value.high),
+        datasets: [
+          {
+            label: 'Data One',
+            backgroundColor: '#f87979',
+            data: this.historyDATA.map((value) => value.high)
+          }
+        ]
+      }
     }
   },
+
   computed: {
     ...mapGetters({ 
       coinDATA: 'getCoinInfo',
       historyDATA: 'getHistoryData'  
     })
-  }
+  } 
 }
 </script>
 
