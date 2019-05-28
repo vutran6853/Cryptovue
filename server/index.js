@@ -9,7 +9,8 @@ const { getAllTotalByVol,
         getAllNews, 
         getSingleCoin, 
         getHistoryByDate,
-        getAllMining } = require('./controllers/cryptocompareData');
+        getAllMining,
+        getCurrentTypeAllCoin } = require('./controllers/cryptocompareData');
 
 app.use(express.json());
 app.use(cors());
@@ -22,6 +23,6 @@ app.get('/api/getSingleCoin/:coin', getSingleCoin);
 app.get('/api/getAllMining', getAllMining)
 
 app.post('/api/getHistoryByDate', getHistoryByDate)
-
+app.post('/api/getCurrentTypeAllCoin', getCurrentTypeAllCoin)
 
 app.listen(port, () => console.log('Server is UP and listen on port ' + port));

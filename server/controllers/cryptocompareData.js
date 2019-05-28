@@ -1,14 +1,20 @@
 const axios = require('axios');
 
 const getAllTotalByVol = (req, res) => {
-
   axios.get(`https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD&api_key=${ process.env.VUE_APP_CRYPTO_KEY }`)
   .then((response) => res.status(200).send(response.data.Data))
   .catch((error) => console.log('Danger unable to fetch getAllTotalByVol' + error));
 }
 
-const getAllExchanges = (req, res) => {
+const getCurrentTypeAllCoin = (req, res, next) => {
+  console.log('hit backedn getCurrentTypeAllCoin')
+  console.log(req.body);
+  axios.get(`https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=${ req.body.type }&api_key=${ process.env.VUE_APP_CRYPTO_KEY }`)
+  .then((response) => res.status(200).send(response.data.Data))
+  .catch((error) => console.log('Danger unable to fetch getAllTotalByVol' + error));
+}
 
+const getAllExchanges = (req, res) => {
   axios.get(`https://min-api.cryptocompare.com/data/exchanges/general?api_key=${ process.env.VUE_APP_CRYPTO_KEY }`)
   .then((response) => res.status(200).send(response.data.Data))
   .catch((error) => console.log('Danger unable to fetch getAllTotalByVol' + error));
@@ -46,7 +52,6 @@ const getHistoryByDate = async(req, res, next) => {
 }
 
 const getAllMining = async(req, res, next) => {
-
   try {
     let response = await axios.get(`https://min-api.cryptocompare.com/data/mining/contracts/general?api_key=${ process.env.VUE_APP_CRYPTO_KEY }`)
     // console.log(response);
@@ -63,5 +68,6 @@ module.exports = {
   getAllNews,
   getSingleCoin,
   getHistoryByDate,
-  getAllMining
+  getAllMining,
+  getCurrentTypeAllCoin
 }

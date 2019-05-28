@@ -37,7 +37,6 @@ const getters = {
 const actions = {
   async handleFetchdata() {
     const response =  await axios.get('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,JPY,EUR')
-            
     this.commit('setCurrentBTCPriceData', response.data)
   },
 
@@ -45,6 +44,16 @@ const actions = {
     axios.get(`${ serverURL }/api/getAllTotalByVol`)
     .then((response) => this.commit('setAllTotalByVolData',  response.data))
     .catch((err) => console.log('Danger unable to fetch handleGetAllTotalByVol' + err));
+  },
+
+  handleGetCurrentTypeForAllCoin({}, payload) {
+    let data = { type: payload }
+
+    axios.post(`${ serverURL }/api/getCurrentTypeAllCoin`, data)
+    .then((response) => console.log(response))
+    // .then((response) => this.commit('setAllTotalByVolData',  response.data))
+    .catch((err) => console.log('Danger unable to fetch handleGetCurrentTypeForAllCoin()' + err));
+
   },
 
   handleGetAllExchanges() {
