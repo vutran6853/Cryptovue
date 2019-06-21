@@ -1,10 +1,15 @@
 <template>
   <div>
-   <div class="miningContainer" v-if='bool == true'>
+   <div class="miningContainer" v-if="bool == true">
       <div class="miningGrid">
-        <div class="miningGridItem" v-for='(value, name, index) in miningDATA' v-bind:key=index>
-          <StarRating class="star-rating" :star-size='20' :rating='value.Rating.Avg' :read-only='true' :increment='0.01'></StarRating>
-          <a class="" v-bind:href='value.AffiliateURL'>
+        <div class="miningGridItem" v-for="(value, name, index) in miningDATA" v-bind:key="index">
+          <StarRating class="star-rating" 
+                      v-bind:star-size='20' 
+                      v-bind:rating="value.Rating.Avg" 
+                      v-bind:read-only="true" 
+                      v-bind:increment='0.01'>
+          </StarRating>
+          <a class="" v-bind:href="value.AffiliateURL">
             <p>{{ value.Company }}</p>
           </a>
           <p>Plan: {{ value.Name }}</p>
@@ -31,9 +36,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import StarRating from 'vue-star-rating';
-
+import { mapGetters } from 'vuex'
+import StarRating from 'vue-star-rating'
 
 export default {
   name: "Mining",
@@ -47,16 +51,12 @@ export default {
     StarRating
   },
   created() {
-    // console.log('hit created')
     this.$store.dispatch('handleGetAllMining')
     this.bool = true
   },
   beforeMount() {
-    console.log('hit mounted');
-    console.log('this=', this.miningDATA);
     this.$store.dispatch('handleGetAllMining')
     this.bool = true
-    // this.top10MiningData = 
   },
   computed: {
     ...mapGetters({ miningDATA: 'getMiningData' })

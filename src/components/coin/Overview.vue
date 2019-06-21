@@ -12,7 +12,7 @@
 
       <div class="center_panelInfo">
         <div class="header_price">
-          <p>Price: {{  coinDATA.DISPLAY.USD.HIGH24HOUR }}</p>
+          <p>Price: {{ coinDATA.DISPLAY.USD.HIGH24HOUR }}</p>
         </div>
 
         <div class="header_grid_item header">
@@ -22,22 +22,22 @@
           <p>Low/High 24h:</p>
         </div>
         <div class="header_grid_item">
-          <p>{{  coinDATA.DISPLAY.USD.MKTCAP }}</p>
-          <p>{{  coinDATA.DISPLAY.USD.LASTVOLUME }}</p>
-          <p>{{  coinDATA.DISPLAY.USD.OPEN24HOUR }}</p>
-          <p>{{  coinDATA.DISPLAY.USD.LOW24HOUR }} - {{  coinDATA.DISPLAY.USD.HIGH24HOUR }}</p>
+          <p>{{ coinDATA.DISPLAY.USD.MKTCAP }}</p>
+          <p>{{ coinDATA.DISPLAY.USD.LASTVOLUME }}</p>
+          <p>{{ coinDATA.DISPLAY.USD.OPEN24HOUR }}</p>
+          <p>{{ coinDATA.DISPLAY.USD.LOW24HOUR }} - {{ coinDATA.DISPLAY.USD.HIGH24HOUR }}</p>
         </div>
 
         <div class="">
           <p>True</p>
           <div>
-            <Bars class="chartContainer" :chart-data='datacollection'></Bars>
+            <Bars class="chartContainer" v-bind:chart-data="datacollection"></Bars>
           </div>
        
         </div>
 
-        <div class="btn_time" v-for='(value, index) in timeDate' v-bind:key=index >
-          <button @click='handleFetchCoinInTime(value), fillData()'>1 {{ index }}</button>
+        <div class="btn_time" v-for="(value, index) in timeDate" v-bind:key="index">
+          <button @click="handleFetchCoinInTime(value), fillData()">1 {{ index }}</button>
         </div>
       </div>
     </div>
@@ -60,7 +60,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import Bars from '../chart/Chart.js';
+import Bars from '../chart/Chart.js'
 
 export default {
   name: "Overview",

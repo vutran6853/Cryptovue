@@ -1,35 +1,31 @@
 <template>
-  <div>
-    <p>News Components</p>
-    <div v-for='news in newsData' v-bind:key='news' class="newsBox">
-      <p>{{ news }}</p>
+  <div class="news-container">
+    <div v-for="(value, index) in newsData" v-bind:key="index">
+      <p>categories: {{ value.categories }}</p>
+      <p>source: {{ value.source }}</p>
+      <p>body: {{ value.body }}</p>
+      <p>tags: {{ value.tags }}</p>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 
 export default {
   name: "News",
-
-  created: function() {
-    this.$store.dispatch('getAllNews')
+  created() {
+    this.$store.dispatch('handleGetAllNews')
   },
   computed: mapGetters({ newsData: 'getAllNews' })
-
 }
 </script>
 
 <style lang="scss">
-.newsBox {
-  border: 2px solid red;
-  text-align: center;
-  margin: 1rem;
-
-  p {
-    border: 2px solid blue;
-  }
+.news-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 </style>
 

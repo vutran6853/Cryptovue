@@ -1,9 +1,13 @@
 <template>
   <div>
-    <div v-if='coins[0]'>
-      <div class="coinListType" >
+    <div v-if="coins[0]">
+      <div class="coinListType">
         <p>Coins List: </p>
-        <span @click='handleGetCurrentTypeForAllCoin(value)' v-for='(value, index) in typeCurrent' :key='index'>{{ value }}</span>
+        <span @click="handleGetCurrentTypeForAllCoin(value)" 
+              v-for="(value, index) in typeCurrent" 
+              v-bind:key="index">
+              {{ value }}
+        </span>
       </div>
 
       <div class="headerGrid">
@@ -14,8 +18,8 @@
         <p>Chg.24h</p>
       </div>
 
-      <router-link :to="`overview/${ displayCoin.CoinInfo.Internal }`" v-for='(displayCoin, index) in coins' :key='displayCoin.CoinInfo.Internal'> 
-        <div class="coinGrid coinHover" @click='handleFetchSingleCoininfo(coins[index])'>
+      <router-link v-bind:to="`overview/${ displayCoin.CoinInfo.Internal }`" v-for='(displayCoin, index) in coins' v-bind:key='displayCoin.CoinInfo.Internal'> 
+        <div class="coinGrid coinHover" @click="handleFetchSingleCoininfo(coins[index])">
           <p>{{ index + 1 }}</p>
           <img v-bind:src="'https://www.cryptocompare.com' + displayCoin.DISPLAY.USD.IMAGEURL" alt="broke"/>
           <p>{{ displayCoin.DISPLAY.USD.HIGH24HOUR }}</p>
@@ -25,14 +29,14 @@
       </router-link>
     </div>
 
-    <div v-else=''>
+    <div v-else="">
       <p>False</p>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: "Coin",
@@ -65,9 +69,7 @@ export default {
   // will bind store to this
   // mapGetters in computed will bind || connenct to this components
   computed: {
-    ...mapGetters({ coins: 'getAllTotalByVol' }),
-
-
+    ...mapGetters({ coins: 'getAllTotalByVol' })
   }
 }
 </script>
@@ -75,18 +77,21 @@ export default {
 <style lang="scss">
 $color: #333;
 $testBox-border: 1px solid blue;
+$marin5px: 5px;
+$text-align-left: left;
+$font-size-16: 16px;
 
 .coinListType {
   // border: $testBox-border;
   display: inline-flex;
   height: 100%;
-  font-size: 16px;
+  font-size: $font-size-16;
 
   p {
-    margin: 5px;
+    margin: $marin5px;
   }
   span {
-    margin: 5px;
+    margin: $marin5px;
   }
 }
 
@@ -102,7 +107,7 @@ $testBox-border: 1px solid blue;
   
   p {
     border: 1px solid red;
-    text-align: left;
+    text-align: $text-align-left;
   }
 }
 

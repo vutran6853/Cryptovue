@@ -1,10 +1,7 @@
 <template>
   <div class="narbar">
-    <div class="narbarItem" v-for='(tabName, index) in navbarTab' v-bind:key='index' >
-      <!-- <button> -->
-      <router-link :to='`/${tabName}`'>{{ tabName }}</router-link>
-
-      <!-- </button> -->
+    <div class="narbarItem" v-for="(tabName, index) in navbarTab" v-bind:key="index" >
+      <router-link v-bind:to="`/${tabName}`">{{ tabName }}</router-link>
     </div>
   </div>
 </template>
@@ -36,19 +33,4 @@ export default {
     background-color: red;
 }
 
-.narbarItem {
-    /* border: 1px solid red; */
-      /* display: inline-flex; */
-     /* width: 100%;  */
-     /* font-size: 1.5rem; */
-         /* justify-content: space-between; */
-  /* justify-items: ; */
-  /* padding: 10px; */
-}
-
-a {
-      /* border: 1px solid red; */
-/* width: 100%;  */
-/* font-size: 2rem; */
-}
 </style>

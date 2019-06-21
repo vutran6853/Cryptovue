@@ -7,10 +7,10 @@
 
 <script>
 // import Dashboard from './components/dashboard/Dashboard.vue';
-import Narvbar from './components/navbar/Navbar';
+import Narvbar from './components/navbar/Navbar'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     Narvbar
   }
@@ -19,8 +19,9 @@ export default {
 
 <style>
 
-body {
+* {
   margin: 0px;
+  padding: 0px;
 }
 
 </style>
